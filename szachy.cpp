@@ -222,39 +222,6 @@ public:
         }
     }
 
-    bool loadGame(const string& filename, bool& isWhiteTurn) {
-        ifstream file(filename);
-        if (file.is_open()) {
-            char turn;
-            file >> turn;
-            isWhiteTurn = (turn == 'W');
-            for (int i = 0; i < 8; ++i) {
-                for (int j = 0; j < 8; ++j) {
-                    char symbol;
-                    file >> symbol;
-                    delete board[i][j];
-                    if (symbol == '.') {
-                        board[i][j] = nullptr;
-                    } else {
-                        bool isWhite = isupper(symbol);
-                        switch (tolower(symbol)) {
-                            case 'k': board[i][j] = new King(isWhite); break;
-                            case 'q': board[i][j] = new Queen(isWhite); break;
-                            case 'b': board[i][j] = new Bishop(isWhite); break;
-                            case 'n': board[i][j] = new Knight(isWhite); break;
-                            case 'r': board[i][j] = new Rook(isWhite); break;
-                            case 'p': board[i][j] = new Pawn(isWhite); break;
-                            default: return false;
-                        }
-                    }
-                }
-            }
-            file.close();
-            return true;
-        }
-        return false;
-    }
-
 private:
     vector<vector<Piece*>> board;
 };
